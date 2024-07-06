@@ -1,5 +1,5 @@
-CC = gcc
-CXX = g++
+CC = cc
+CXX = CC
 
 CPP = yes
 THREADS=yes
@@ -9,7 +9,7 @@ SHAREABLE=
 IDIR = ./dim
 
 EXTRALIBS = 
-FLAGS = -std=c++14 -fPIC
+FLAGS = 
 
 CFLAGS = $(FLAGS) -g -I$(IDIR)
 EXCFLAGS = $(FLAGS) -g -I$(IDIR) 
@@ -25,7 +25,7 @@ ifeq ($(32BITS),yes)
 	LIBFLAGS += -m32
 	EXCFLAGS += -m32
 	X64 = no
-elseODIR
+else
 	X64 = yes
 endif
 

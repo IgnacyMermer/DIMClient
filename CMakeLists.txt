@@ -1,35 +1,20 @@
-#cmake_minimum_required(VERSION 3.1)
-#project(MyDimServer)
-#set(CMAKE_CXX_STANDARD 14)
-#set(CMAKE_CXX_STANDARD_REQUIRED ON)
+cmake_minimum_required(VERSION 3.10)
 
-#set(SOURCES "src/main.cpp")
+# Nazwa projektu
+project(MyProject)
 
-#add_executable(MyDimServerExec ${SOURCES})
+# Dodajemy główne pliki źródłowe
+add_executable(MyProject src/main.cpp)
 
-#target_include_directories(MyDimServerExec PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# Dodajemy katalogi z nagłówkami z zewnętrznego projektu
+include_directories(${CMAKE_SOURCE_DIR}/dim/dim)
 
-#target_link_libraries(MyDimServerExec PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/dim/linux/libdim.a)
+# Linkujemy skompilowaną bibliotekę
+target_link_libraries(MyProject ${CMAKE_SOURCE_DIR}/dim/linux/libdim.a pthread)
 
+# Możesz także zdefiniować ścieżki jako zmienne, aby ułatwić zarządzanie
+#set(DIM_LIB_DIR ${CMAKE_SOURCE_DIR}/dim)
+#set(DIM_INCLUDE_DIR ${DIM_LIB_DIR}/linux)
 
-
-cmake_minimum_required(VERSION 3.1)
-#set(CMAKE_CXX_STANDARD 17)
-project(FREDServer2)
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ./lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ./lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../bin)
-
-#file(GLOB SOURCES "src/main.cpp")
-set(FILES src/main.cpp)
-add_executable(FREDServer2 ${FILES})
-
-target_include_directories(FREDServer2 PRIVATE dim/dim)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -gdwarf-4 -D_GLIBCXX_USE_CXX11_ABI=0")
-
-target_link_libraries(FREDServer2 ${CMAKE_SOURCE_DIR}/dim/linux/libdim.a pthread stdc++)
+#include_directories(${DIM_INCLUDE_DIR})
+#target_link_libraries(MyProject ${DIM_LIB_DIR}/libdim.a)
