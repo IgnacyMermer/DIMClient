@@ -7,6 +7,28 @@
 #include "../dim/dim/dis.hxx"
 
 
+class RunVars : public DimClient
+{
+    DimInfo runNumber;
+    DimInfo runType;
+public:
+    RunVars():
+        runNumber("CALCULATOR/SCORE", -1, this), 
+        runType("DELPHI/RUN_TYPE", "not available", this)
+        {}
+    void infoHandler() {
+        std::cout<<"lalalal";
+        DimInfo *curr = getInfo();
+        if(curr == &runNumber) { 
+            int run = curr->getInt(); 
+            std::cout<<run;
+        }
+        else { 
+            char *type = curr->getString(); 
+        };
+    }
+};
+
 
 int main()
 {
@@ -15,6 +37,7 @@ int main()
     int index = 0;
     int services;
     DimBrowser br;
+    //RunVars runVars;
     std::cout<< "from "<< DimClient::getServerName() << " services:";
     std::cout<<"DelphiServer started and run service with updating number";
     int n = br.getServices("*");
@@ -29,8 +52,13 @@ int main()
     DimInfo scoreNumber("CALCULATOR/SCORE", 0);
 
     sleep(1);
+    bool isUpdate=false;
     while(1){
-        std::cout << scoreNumber.getInt()<<"\n";
+        /*while(!isUpdate){
+            std::cout << scoreNumber.getInt()<<"\n";
+            isUpdate=true;
+        }
+        isUpdate=false;*/
         std::string command;
         int firstNumber, secondNumber;
         std::cout<<"Podaj komende (ADD, SUBSTRACT, MULT, DIVIDE)"<<'\n';
@@ -42,7 +70,10 @@ int main()
         std::string fullCommand = (command+"_"+std::to_string(firstNumber)+"_"+std::to_string(secondNumber));
         std::cout<<fullCommand.c_str()<<'\n';
         DimClient::sendCommand("CALCULATOR/OPERATION", fullCommand.c_str());
-        sleep(2);
+        sleep(3);
+        std::cout << scoreNumber.getInt()<<"\n";
+        //pause();
+        
     }
 
     /*for(int i=0; i<10; i++){
